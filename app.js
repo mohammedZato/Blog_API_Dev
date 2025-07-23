@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const errorHandler = require("./Handlers/errorHandler");
 const mongoose = require("mongoose");
+const userRoutes = require("./Modules/Users/Controller/users.routes");
 
 const app = express();
 
@@ -17,6 +18,9 @@ mongoose
 
 app.use(express.json());
 require("./Models/users.model");
+
+//Routes
+app.use("/api/users", userRoutes);
 
 app.use(errorHandler);
 
