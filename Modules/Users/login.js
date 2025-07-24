@@ -16,7 +16,7 @@ const login = async (req, res) => {
   if (!getUser) throw "Email does not exist. Please register";
 
   const comparePassword = await bcrypt.compare(password, getUser.password);
-  if (!comparePassword) throw "Passwords do not match. Try Again!";
+  if (!comparePassword) throw "Password Incorrect. Try Again!";
 
   const accessToken = jwtHandler(getUser);
 
