@@ -4,6 +4,7 @@ const express = require("express");
 const errorHandler = require("./Handlers/errorHandler");
 const mongoose = require("mongoose");
 const userRoutes = require("./Modules/Users/Controller/users.routes");
+// const postsRoutes = require("./Modules/Posts/Controller/posts.route");
 
 const app = express();
 
@@ -18,6 +19,7 @@ mongoose
 
 app.use(express.json());
 require("./Models/users.model");
+// require("./Models/posts.model");
 
 //Routes
 app.use("/api/users", userRoutes);
