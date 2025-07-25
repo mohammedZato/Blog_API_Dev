@@ -13,6 +13,7 @@ const login = async (req, res) => {
   const getUser = await usersModel.findOne({
     email: email,
   });
+
   if (!getUser) throw "Email does not exist. Please register";
 
   const comparePassword = await bcrypt.compare(password, getUser.password);

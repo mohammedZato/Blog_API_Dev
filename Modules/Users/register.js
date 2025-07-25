@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const emailHandler = require("../../Managers/emailManager");
+const jwtHandler = require("../../Managers/jwtManager");
 
 const register = async (req, res) => {
   const usersModel = mongoose.model("users");
@@ -23,7 +24,7 @@ const register = async (req, res) => {
 
   const hashedPassword = await bcrypt.hash(password, 12);
 
-  await usersModel.create({
+  const newUser = await usersModel.create({
     username,
     email,
     password: hashedPassword,
@@ -36,9 +37,12 @@ const register = async (req, res) => {
     "Alpha Blog Website Registration"
   );
 
+  const accessToken = jwtHandler(newUser);
+
   res.status(200).json({
     status: "success",
     message: "Registration Successful",
+    accessToken,
   });
 };
 
