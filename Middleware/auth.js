@@ -8,9 +8,9 @@ const authHandler = (req, res, next) => {
 
     req.user = jwt_payload;
   } catch (error) {
-    res.status(500).json({
+    res.status(401).json({
       status: "failed",
-      message: "Error occured Try again",
+      message: "Unauthorised",
     });
   }
 

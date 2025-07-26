@@ -19,7 +19,7 @@ mongoose
 
 app.use(express.json());
 require("./Models/users.model");
-// require("./Models/posts.model");
+require("./Models/posts.model");
 
 //Routes
 app.use("/api/users", userRoutes);
