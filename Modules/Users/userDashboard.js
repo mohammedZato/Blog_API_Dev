@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const userDashboard = async (req, res) => {
   const usersModel = mongoose.model("users");
+  const postsModel = mongoose.model("posts");
 
   const getUser = await usersModel
     .findOne({
@@ -9,10 +10,14 @@ const userDashboard = async (req, res) => {
     })
     .select("-password");
 
+  const allPost = await postsModel.find({
+    author: req.user._id,
+  });
+
   res.status(200).json({
     status: "success",
     message: "user dashboard display",
-    user: getUser,
+    allPost,
   });
 };
 
