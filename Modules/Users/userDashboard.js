@@ -10,9 +10,11 @@ const userDashboard = async (req, res) => {
     })
     .select("-password");
 
-  const allPost = await postsModel.find({
-    author: req.user._id,
-  });
+  const allPost = await postsModel
+    .find({
+      author: req.user._id,
+    })
+    .sort("-createdAt");
 
   res.status(200).json({
     status: "success",

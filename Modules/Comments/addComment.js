@@ -23,6 +23,9 @@ const addComment = async (req, res) => {
     author: req.user._id,
   });
 
+  getPost.comments.push(newComment._id);
+  await getPost.save();
+
   res.status(200).json({
     status: "comment added successfully",
     newComment,
