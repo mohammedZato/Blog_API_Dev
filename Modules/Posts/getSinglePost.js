@@ -9,10 +9,16 @@ const getSinglePost = async (req, res) => {
   if (!validator.isMongoId(postId)) throw "Invalid Post ID";
 
   //   const post = postsModel.findById(postId); alternate way to find a post in model
-  const getPost = await postsModel.findOne({ _id: postId }).populate({
-    path: "comments",
-    options: { sort: { createdAt: -1 } }, // sort comments by newest
-  });
+  const getPost = await postsModel.findOne({ _id: postId }).populate([
+    {
+      path: "comments",
+      options: { sort: { createdAt: -1 } }, // sort comments by newest
+    },
+    {
+      path: "likes",
+      select: "username email",
+    },
+  ]);
 
   if (!getPost) throw "Post not Available";
 
