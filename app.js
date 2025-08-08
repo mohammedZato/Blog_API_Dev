@@ -1,12 +1,14 @@
 require("express-async-errors");
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const errorHandler = require("./Handlers/errorHandler");
 const mongoose = require("mongoose");
 const userRoutes = require("./Modules/Users/Controller/users.routes");
 const postsRoutes = require("./Modules/Posts/Controller/posts.route");
 
 const app = express();
+app.use(cors());
 
 mongoose
   .connect(process.env.mongo_connection)
@@ -25,7 +27,12 @@ require("./Models/comments.model");
 //Routes
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postsRoutes);
-
+app.all("*", (req, res, next) => {
+  res.status(404).json({
+    status: "failed",
+    message: "Page Not Found",
+  });
+});
 app.use(errorHandler);
 
 app.listen(8000, () => {

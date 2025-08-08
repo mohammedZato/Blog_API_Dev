@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const redisClient = require("../../config/redis");
 
 const editPost = async (req, res) => {
   const postsModel = mongoose.model("posts");
@@ -27,6 +28,8 @@ const editPost = async (req, res) => {
       runValidators: true,
     }
   );
+
+  await redisClient.del(`post:${postId}`);
 
   res.status(201).json({
     status: "editted post successfully",

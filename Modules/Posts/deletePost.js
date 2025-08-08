@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const redisClient = require("../../config/redis");
 
 const deletePost = async (req, res) => {
   const postsModel = mongoose.model("posts");
@@ -15,6 +16,8 @@ const deletePost = async (req, res) => {
   await postsModel.deleteOne({
     _id: postId,
   });
+
+  await redisClient.del(`post:${postId}`);
 
   res.status(201).json({
     status: "success",
