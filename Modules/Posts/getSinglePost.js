@@ -46,7 +46,7 @@ const getSinglePost = async (req, res) => {
   } catch (error) {
     console.log("Error: ", error);
     res.status(500).json({
-      message: "Servor Error",
+      message: error?.message || error || "Servor Error",
     });
   }
 };
