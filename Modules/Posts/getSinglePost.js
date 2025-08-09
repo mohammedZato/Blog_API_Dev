@@ -37,7 +37,7 @@ const getSinglePost = async (req, res) => {
     if (!getPost) throw "Post not Available";
 
     // Step 3: Cache the DB result in Redis
-    await redisClient.setEx(cacheKey, JSON.stringify(getPost), "EX", 60 * 5);
+    await redisClient.setEx(cacheKey, 60 * 5, JSON.stringify(getPost));
 
     res.status(200).json({
       status: "from database",
